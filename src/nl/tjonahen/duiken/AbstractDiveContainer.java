@@ -45,6 +45,7 @@ public abstract class AbstractDiveContainer extends Container {
 
         deco3.setPreferredSize(new Dimension(3 * single, 14));
         deco3.getStyle().setBgTransparency(0);
+
         setSurfaceAirMinutesLabelStyle(surfaceAirMinutes);
         
         cnt.addComponent(maximumDiveDepth);

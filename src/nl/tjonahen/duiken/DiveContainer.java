@@ -16,6 +16,8 @@ public class DiveContainer extends AbstractDiveContainer {
     @Override
     protected void setSurfaceAirMinutesLabelStyle(final Label surfaceAirMinutes) {
         surfaceAirMinutes.getStyle().setBgTransparency(0);
-        surfaceAirMinutes.getStyle().setAlignment(RIGHT);
+        surfaceAirMinutes.setRTL(true);
+//        surfaceAirMinutes.setTextPosition(RIGHT);
+        
     }
 }
