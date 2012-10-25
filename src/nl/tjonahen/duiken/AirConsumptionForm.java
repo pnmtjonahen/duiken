@@ -46,7 +46,6 @@ public class AirConsumptionForm extends Form {
         cnt.addComponent(input);
         cnt.addComponent(new Label("liter/minute"));
         cnt.addComponent(new Button(new Command("Bereken") {
-
             @Override
             public void actionPerformed(ActionEvent evt) {
                 evt.consume();

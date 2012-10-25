@@ -1,14 +1,10 @@
 package nl.tjonahen.duiken;
 
-import nl.tjonahen.duiken.deco.DecoTable;
-import com.codename1.ui.Command;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
-import com.codename1.ui.List;
 import com.codename1.ui.animations.CommonTransitions;
-import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
@@ -39,36 +35,11 @@ public class Duiken {
         showSplashAnimation();
     }
     private void  showMainUI() {
-             if (current != null) {
+        if (current != null) {
             current.show();
             return;
         }
-        final Form mainForm = new Form("NOB - Duiktabel");
-        final AirConsumptionForm airConsumptionDialog = new AirConsumptionForm();
-
-        Command exitCommand = new Command("Exit") {
-            @Override
-            public void actionPerformed(ActionEvent ev) {
-                Display.getInstance().exitApplication();
-            }
-        };
-        mainForm.setBackCommand(exitCommand);
-
-        mainForm.addCommand(new AirConsumptionCommand(airConsumptionDialog, mainForm));
-        
-        final DecoTable dt = new DecoTable();
-
-        mainForm.setScrollable(false);
-        List l = new List(new DiveListModel(dt));
-        l.setRenderer(new DiveListCellRenderer());
-        l.setFixedSelection(List.FIXED_NONE);
-        l.getStyle().setBgTransparency(0);
-        l.addActionListener(new ShowDiveCalculationActionListner(airConsumptionDialog, mainForm));
-
-        mainForm.setLayout(new BorderLayout());
-        mainForm.addComponent(BorderLayout.CENTER, l);
-
-
+        final DecoTableForm mainForm = new DecoTableForm();
         mainForm.show();
     }
 
@@ -94,7 +65,7 @@ public class Duiken {
         subtitle.setUIID("SplashSubTitle");
         splash.addComponent(BorderLayout.NORTH, title);
         splash.addComponent(BorderLayout.SOUTH, subtitle);
-        Label beaker = new Label(res.getImage("duiker.png"));
+        Label beaker = new Label(res.getImage("dipnoi.png"));
 //        Label beakerLogo = new Label(res.getImage("beaker_logo.png"));
         Container layeredLayout = new Container(new LayeredLayout());
         splash.addComponent(BorderLayout.CENTER, layeredLayout);

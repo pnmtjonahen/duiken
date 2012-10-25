@@ -7,6 +7,7 @@ package nl.tjonahen.duiken;
 import nl.tjonahen.duiken.deco.DecoTable;
 import nl.tjonahen.duiken.deco.ResultSurfaceAirMinutes;
 import junit.framework.Assert;
+import nl.tjonahen.duiken.deco.Config;
 import org.junit.Test;
 
 /**
@@ -14,10 +15,13 @@ import org.junit.Test;
  * @author ordina
  */
 public class DecoTabelTest {
+    private Config config;
 
     @Test
     public void testOvm() {
-        DecoTable decoTabel = new DecoTable();
+        config = new Config();
+        config.setIncludeDeepStop(true);
+        DecoTable decoTabel = new DecoTable(config);
 
         ResultSurfaceAirMinutes result = decoTabel.calculateSurfaceAirMinutes(9, 300, 0, 0, 0, 0);
         
