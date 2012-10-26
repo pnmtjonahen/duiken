@@ -29,8 +29,8 @@ public class ImpossibleDiveContainer extends AbstractDiveContainer {
      */
     @Override
     protected void setSurfaceAirMinutesLabelStyle(final Label surfaceAirMinutes) {
-        surfaceAirMinutes.getStyle().setBgColor(0xFF0000);
-        surfaceAirMinutes.setRTL(false);
+//        surfaceAirMinutes.getStyle().setBgColor(0xFF0000);
+//        surfaceAirMinutes.setRTL(false);
         
 //        surfaceAirMinutes.getStyle().setAlignment(RIGHT);
     }

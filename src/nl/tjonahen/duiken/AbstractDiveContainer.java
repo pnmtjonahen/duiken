@@ -17,6 +17,7 @@
 package nl.tjonahen.duiken;
 
 import com.codename1.ui.Container;
+import com.codename1.ui.Display;
 import com.codename1.ui.Label;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
@@ -36,6 +37,7 @@ public abstract class AbstractDiveContainer extends Container {
     private Label deco6 = new Label("");
     private Label deco3 = new Label("");
     private Label surfaceAirMinutes = new Label("");
+    private Label hg = new Label("");
 
     /**
      * Constructor
@@ -43,24 +45,17 @@ public abstract class AbstractDiveContainer extends Container {
     public AbstractDiveContainer() {
         setLayout(new BorderLayout());
         Container cnt = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        
+        
         int single = getStyle().getFont().charWidth('9');
         maximumDiveDepth.setPreferredSize(new Dimension(3 * single, 14));
-        maximumDiveDepth.getStyle().setBgTransparency(0);
-
         diveTime.setPreferredSize(new Dimension(4 * single, 14));
-        diveTime.getStyle().setBgTransparency(0);
-
         deco12.setPreferredSize(new Dimension(2 * single, 14));
-        deco12.getStyle().setBgTransparency(0);
-
         deco9.setPreferredSize(new Dimension(2 * single, 14));
-        deco9.getStyle().setBgTransparency(0);
-
         deco6.setPreferredSize(new Dimension(2 * single, 14));
-        deco6.getStyle().setBgTransparency(0);
-
         deco3.setPreferredSize(new Dimension(3 * single, 14));
-        deco3.getStyle().setBgTransparency(0);
+        hg.setPreferredSize(new Dimension(2 * single, 14));
+
 
         setSurfaceAirMinutesLabelStyle(surfaceAirMinutes);
         
@@ -70,6 +65,7 @@ public abstract class AbstractDiveContainer extends Container {
         cnt.addComponent(deco9);
         cnt.addComponent(deco6);
         cnt.addComponent(deco3);
+        cnt.addComponent(hg);
         cnt.addComponent(surfaceAirMinutes);
         addComponent(BorderLayout.CENTER, cnt);
 
@@ -97,5 +93,6 @@ public abstract class AbstractDiveContainer extends Container {
         } else {
             surfaceAirMinutes.setText(dive.getDisplayValue(dive.getResultSurfaceAirMinutes().total()));
         }
+        hg.setText("" + dive.getHg());
     }
 }

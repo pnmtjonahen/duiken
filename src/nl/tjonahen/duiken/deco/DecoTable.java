@@ -139,10 +139,12 @@ public class DecoTable {
     public String[] getHeader() {
         return header;
     }
+    public String getHg() {
+        return herhalings;
+    }
     
-    
-    private String[] header = {"MDD", "DT", "12", "9", "6", "3", "OVM"};
-    private int[][] table = {
+    private static final String[] header = {"MDD", "DT", "12", "9", "6", "3", "OVM"};
+    private static final int[][] table = {
         {9, 300, 0, 0, 0, 0},
         {9, 330, 0, 0, 0, 3},
         {9, 360, 0, 0, 0, 5},
@@ -251,4 +253,5 @@ public class DecoTable {
         {54, 10, 0, 0, 6, 9},
         {54, 15, 0, 7, 7, 11},
         {54, 20, 6, 6, 8, 25},};
+    private static final String herhalings = "MNOJMGIKKLMFGIJKLMEFGHJKMNEFGHIJJKLMDEFHIJKLDEFGHIJKLCDFGHIJKMNCEFGIJKMNBCEGHJKMNBDFGIKLNBDFHJKBDGHKBDGIBDEHJ"; 
 }

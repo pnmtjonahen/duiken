@@ -34,11 +34,10 @@ public class DiveListCellRenderer implements ListCellRenderer {
     private Label focus = new Label("");
 
     public DiveListCellRenderer() {
-        focus.getStyle().setBgTransparency(128);
-        focus.getStyle().setBgColor(0xFF0000);
+        focus.setUIID("Focus");
     }
 
-    public Component getListCellRendererComponent(List list, Object value, int index, boolean isSelected) {
+    public Component getListCellRendererComponent(final List list, final Object value, final int index, final boolean isSelected) {
         final Dive duik = (Dive) value;
         if (duik.getResultSurfaceAirMinutes().getBottom().getTime() < 0.0) {
             nietOkContainer.setDuik(duik);
@@ -49,7 +48,7 @@ public class DiveListCellRenderer implements ListCellRenderer {
         return okContainer;
     }
 
-    public Component getListFocusComponent(List list) {
+    public Component getListFocusComponent(final List list) {
         return focus;
     }
 }

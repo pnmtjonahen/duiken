@@ -16,14 +16,11 @@
  */
 package nl.tjonahen.duiken;
 
-import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.animations.CommonTransitions;
 import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.codename1.ui.util.UITimer;
@@ -43,6 +40,9 @@ public class Duiken {
         try {
             res = Resources.openLayered("/theme");
             UIManager.getInstance().setThemeProps(res.getTheme(res.getThemeResourceNames()[0]));
+            if (Display.getInstance().canForceOrientation()) {
+                Display.getInstance().lockOrientation(false);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,21 +69,17 @@ public class Duiken {
     
     private void showSplashAnimation() {
         Form splash = new Form();
-        splash.setUIID("Splash");
         BorderLayout border = new BorderLayout();
         border.setCenterBehavior(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE);
         splash.setLayout(border);
         splash.setScrollable(false);
         Label title = new Label("Duiken");
-        title.setUIID("Splash");
         Label subtitle = new Label("By Philippe");
-        subtitle.setUIID("Splash");
         splash.addComponent(BorderLayout.NORTH, title);
         splash.addComponent(BorderLayout.SOUTH, subtitle);
-        final Image image = res.getImage("dipnoi1.png");
+        final Image image = res.getImage("dipnoi.png");
         
-        Label beaker = new Label(image.scaledHeight(320));
-        beaker.getStyle().setBgTransparency(0);
+        Label beaker = new Label(image.scaledWidth(Display.getInstance().getDisplayWidth() - 10));
         splash.addComponent(BorderLayout.CENTER, beaker);
         
         

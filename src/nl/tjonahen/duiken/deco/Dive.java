@@ -30,6 +30,7 @@ public class Dive {
     private int deco6;
     private int deco3;
     private ResultSurfaceAirMinutes resultSurfaceAirMinutes;
+    private char hg;
 
     public int getMaximumDiveDepth() {
         return maximumDiveDepth;
@@ -79,6 +80,14 @@ public class Dive {
         this.deco3 = deco3;
     }
 
+    public char getHg() {
+        return hg;
+    }
+
+    public void setHg(char hg) {
+        this.hg = hg;
+    }
+
     public ResultSurfaceAirMinutes getResultSurfaceAirMinutes() {
         return resultSurfaceAirMinutes;
     }
@@ -107,5 +116,13 @@ public class Dive {
      */
     public String getDisplayValue(final float value) {
         return "" + Math.floor(value*100f + 0.5f) / 100f;
+    }
+    /**
+     * 
+     * @param value -
+     * @return the value in a displayable way (0 zero is not displayed)
+     */
+    public String getDisplayValue(final char value) {
+        return "" + value;
     }
 }

@@ -52,9 +52,10 @@ public class ShowDiveCalculationActionListner implements ActionListener {
         final List list = (List) evt.getSource();
         final int selectedIndex = list.getModel().getSelectedIndex();
         final Dive duik = (Dive) list.getModel().getItemAt(selectedIndex);
+        
         toonDuikBerekeningForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
         final Container cnt = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-
+        addHeader(cnt, duik);
         addOvmBerekeningContainer(cnt, duik);
         addTotals(cnt, duik);
 
@@ -155,10 +156,6 @@ public class ShowDiveCalculationActionListner implements ActionListener {
     }
     
     private void addTotals(final Container dialog, final Dive duik) {
-//        Container cnt = new Container();
-//        cnt.getStyle().setBgTransparency(255);
-//
-//        cnt.addComponent(new Label("bt brk."));
         String calc = duik.getDisplayValue(duik.getDiveTime()) 
                 + " - " + duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getDescend().getTime());
         int diepte = duik.getMaximumDiveDepth();
@@ -168,11 +165,7 @@ public class ShowDiveCalculationActionListner implements ActionListener {
             diepte = stop.getDepth();
         }
         dialog.addComponent(new Label("bt brk. = " + calc + "  "));
-
-//        dialog.addComponent(cnt);
-
         Container cnt = new Container(new GridLayout(3, 3));
-//        cnt.getStyle().setBgTransparency(255);
         
         cnt.addComponent(new Label("bt"));
         cnt.addComponent(new Label("="));
@@ -185,5 +178,29 @@ public class ShowDiveCalculationActionListner implements ActionListener {
         cnt.addComponent(new Label(""));
         cnt.addComponent(new Label(""));
         dialog.addComponent(cnt);
+    }
+
+    private void addHeader(final Container cnt, final Dive duik) {
+        final Container header = new Container(new GridLayout(2, 7));
+        
+        header.addComponent(new Label("mdd"));
+        header.addComponent(new Label("dt"));
+        header.addComponent(new Label("12"));
+        header.addComponent(new Label("9"));
+        header.addComponent(new Label("6"));
+        header.addComponent(new Label("3"));
+        header.addComponent(new Label("hg"));
+        
+
+        header.addComponent(new Label(duik.getDisplayValue(duik.getMaximumDiveDepth())));
+        header.addComponent(new Label(duik.getDisplayValue(duik.getDiveTime())));
+        header.addComponent(new Label(duik.getDisplayValue(duik.getDeco12())));
+        header.addComponent(new Label(duik.getDisplayValue(duik.getDeco9())));
+        header.addComponent(new Label(duik.getDisplayValue(duik.getDeco6())));
+        header.addComponent(new Label(duik.getDisplayValue(duik.getDeco3())));
+        header.addComponent(new Label(duik.getDisplayValue(duik.getHg())));
+                
+        
+        cnt.addComponent(header);
     }
 }

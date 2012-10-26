@@ -51,6 +51,7 @@ public class DiveListModel implements ListModel {
             duiken[i].setDeco6(table[i][4]);
             duiken[i].setDeco3(table[i][5]);
             duiken[i].setResultSurfaceAirMinutes(total);
+            duiken[i].setHg(dt.getHg().charAt(i));
         }
     }
 
