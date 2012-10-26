@@ -23,17 +23,39 @@ import java.io.Serializable;
  * Configuration holder
  */
 public class Config implements Serializable {
-    private boolean includeDeepStop;
     
-    public Config() {
+    
+    public static final String INCLUDE_DEEP_STOP = "includeDeepStop";
+    public static final String PERSONAL_AIR = "personalAir";
+
+    private Boolean includeDeepStop;
+    private Integer personalAir;
+    
+    private static Config _instance = null;
+    public static synchronized Config getInstance() {
+        if (_instance == null) {
+           _instance = new Config(); 
+        }
+        return _instance;
+        
+    }
+    private Config() {
     }
 
-    public boolean isIncludeDeepStop() {
+    public Boolean isIncludeDeepStop() {
         return includeDeepStop;
     }
 
-    public void setIncludeDeepStop(final boolean includeDeepStop) {
+    public void setIncludeDeepStop(final Boolean includeDeepStop) {
         this.includeDeepStop = includeDeepStop;
+    }
+
+    public Integer getPersonalAir() {
+        return personalAir;
+    }
+
+    public void setPersonalAir(Integer personalAir) {
+        this.personalAir = personalAir;
     }
     
     

@@ -54,7 +54,7 @@ public abstract class AbstractDiveContainer extends Container {
         deco9.setPreferredSize(new Dimension(2 * single, 14));
         deco6.setPreferredSize(new Dimension(2 * single, 14));
         deco3.setPreferredSize(new Dimension(3 * single, 14));
-        hg.setPreferredSize(new Dimension(2 * single, 14));
+        hg.setPreferredSize(new Dimension(3 * single, 14));
 
 
         setSurfaceAirMinutesLabelStyle(surfaceAirMinutes);

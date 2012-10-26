@@ -37,21 +37,19 @@ class ConfigForm extends Form {
     private CheckBox cb;
     private TextField personal;
             
-    public void init(final Config config, final DecoTableForm mainForm) {
-
+    public void init(final DecoTableForm mainForm) {
         setLayout(new BorderLayout());
         final Container cn = new Container(new BoxLayout(BoxLayout.Y_AXIS));
         cb = new CheckBox("Gebruik Diep Stop");
-        cb.setSelected(config.isIncludeDeepStop());
         cn.addComponent(cb);
         
-//        personal = new TextField("16");
-//        personal.setConstraint(TextField.NUMERIC);
-//        Container input = new Container(new BoxLayout(BoxLayout.X_AXIS));
-//        
-//        input.addComponent(personal);
-//        input.addComponent(new Label("liter/minute"));
-//        cn.addComponent(input);
+        personal = new TextField("");
+        personal.setConstraint(TextField.NUMERIC);
+        Container input = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        
+        input.addComponent(personal);
+        input.addComponent(new Label("liter/minute"));
+        cn.addComponent(input);
         
         addComponent(BorderLayout.NORTH, cn);
         addComponent(BorderLayout.SOUTH, new Button(new Command("Ok") {
@@ -59,8 +57,12 @@ class ConfigForm extends Form {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 evt.consume();
-                config.setIncludeDeepStop(cb.isSelected());
-                Storage.getInstance().writeObject("includeDeepStop", config.isIncludeDeepStop());
+                Config.getInstance().setIncludeDeepStop(cb.isSelected());
+                Storage.getInstance().writeObject(Config.INCLUDE_DEEP_STOP, Config.getInstance().isIncludeDeepStop());
+                final String value = personal.getText();
+                final Integer verbruik = Integer.valueOf(value);
+                Config.getInstance().setPersonalAir(verbruik);
+                Storage.getInstance().writeObject(Config.PERSONAL_AIR, verbruik);
                 mainForm.refresh();
                 mainForm.showBack();
             }
@@ -80,6 +82,12 @@ class ConfigForm extends Form {
     @Override
     protected void actionCommand(Command cmd) {
         super.actionCommand(cmd);
+    }
+
+    void updateConfig() {
+        final Config config = Config.getInstance();
+        cb.setSelected(config.isIncludeDeepStop());
+        personal.setText("" + config.getPersonalAir());
     }
     
 }

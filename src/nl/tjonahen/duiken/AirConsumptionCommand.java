@@ -19,6 +19,7 @@ package nl.tjonahen.duiken;
 import com.codename1.ui.Command;
 import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionEvent;
+import nl.tjonahen.duiken.deco.Config;
 
 /**
  * Command to handle the AirConsumption command.
@@ -26,8 +27,8 @@ import com.codename1.ui.events.ActionEvent;
  * @author Phhilippe Tjon-A-Hen
  */
 public class AirConsumptionCommand extends Command {
-    private Form main;
-    private AirConsumptionForm verbruik;
+    private final Form main;
+    private final AirConsumptionForm verbruik;
    
     /**
      * 
@@ -46,6 +47,8 @@ public class AirConsumptionCommand extends Command {
     @Override
     public void actionPerformed(ActionEvent ev) {
         verbruik.setBackForm(main);
+        verbruik.updateConfig();
+        verbruik.calculate();
         verbruik.show();
     }
     

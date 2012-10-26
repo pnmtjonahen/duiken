@@ -34,8 +34,8 @@ import nl.tjonahen.duiken.deco.Stop;
  * @author Philippe Tjon-A-Hen
  */
 public class ShowDiveCalculationActionListner implements ActionListener {
-    private Form previousForm;
-    private AirConsumptionForm airConsumptionForm;
+    private final Form previousForm;
+    private final AirConsumptionForm airConsumptionForm;
     
     public ShowDiveCalculationActionListner(final AirConsumptionForm airConsumptionForm, final Form previousForm) {
         this.previousForm = previousForm;

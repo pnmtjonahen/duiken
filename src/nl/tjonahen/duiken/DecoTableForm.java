@@ -32,26 +32,16 @@ import nl.tjonahen.duiken.deco.DecoTable;
  */
 public class DecoTableForm extends Form {
 
-    private final Config config;
+    private Config config;
     private final AirConsumptionForm airConsumptionDialog;
     private List current;
 
     public DecoTableForm() {
         super("NOB - Duiktabel");
+        setupConfig();
         airConsumptionDialog = new AirConsumptionForm();
-        final Storage storage = Storage.getInstance();
-        final Object object = storage.readObject("includeDeepStop");
-        config = new Config();
-        config.setIncludeDeepStop(false);
-        if (object == null) {
-            config.setIncludeDeepStop(false);
-            storage.writeObject("includeDeepStop", config.isIncludeDeepStop());
-            storage.flushStorageCache();
-        } else {
-            config.setIncludeDeepStop((Boolean) object);
-        }
         final ConfigForm configForm = new ConfigForm();
-        configForm.init(config, this);
+        configForm.init(this);
 
         Command exitCommand = new Command("Exit") {
             @Override
@@ -79,11 +69,36 @@ public class DecoTableForm extends Form {
     }
     
     private List getList() {
-        final DecoTable dt = new DecoTable(config);
+        final DecoTable dt = new DecoTable();
         final List l = new List(new DiveListModel(dt));
         l.setRenderer(new DiveListCellRenderer());
         l.setFixedSelection(List.FIXED_NONE);
         l.addActionListener(new ShowDiveCalculationActionListner(airConsumptionDialog, this));
         return l;
+    }
+
+    private void setupConfig() {
+        final Storage storage = Storage.getInstance();
+
+        config = Config.getInstance();
+        config.setIncludeDeepStop(false);
+        config.setPersonalAir(new Integer(16));
+
+        Object object = storage.readObject(Config.INCLUDE_DEEP_STOP);
+        if (object == null) {
+            storage.writeObject(Config.INCLUDE_DEEP_STOP, config.isIncludeDeepStop());
+            storage.flushStorageCache();
+        } else {
+            config.setIncludeDeepStop((Boolean) object);
+            
+        }
+        object = storage.readObject(Config.PERSONAL_AIR);
+        if (object == null) {
+            storage.writeObject(Config.PERSONAL_AIR, config.getPersonalAir());
+            storage.flushStorageCache();
+        } else {
+            config.setPersonalAir((Integer) object);
+            
+        }
     }
 }

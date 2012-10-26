@@ -16,6 +16,7 @@
  */
 package nl.tjonahen.duiken;
 
+import com.codename1.io.Storage;
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;
@@ -25,6 +26,7 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.GridLayout;
+import nl.tjonahen.duiken.deco.Config;
 
 /**
  * Air consumption form to calculate the personal air consumption per dive cylinder.
@@ -53,10 +55,9 @@ public class AirConsumptionForm extends Form {
     public AirConsumptionForm() {
         super("Verbruik");
         Container main = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-//        main.getStyle().setBgTransparency(255);
         
         Container cnt = new Container(new GridLayout(1,3));
-        input = new TextField("16");
+        input = new TextField("");
         input.setConstraint(TextField.NUMERIC);
         
         cnt.addComponent(input);
@@ -65,6 +66,11 @@ public class AirConsumptionForm extends Form {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 evt.consume();
+                final String value = input.getText();
+                final Integer verbruik = Integer.valueOf(value);
+                Config.getInstance().setPersonalAir(verbruik);
+                Storage.getInstance().writeObject(Config.PERSONAL_AIR, verbruik);
+
                 calculate();
             }
             
@@ -131,7 +137,6 @@ public class AirConsumptionForm extends Form {
                 mainForm.showBack();
             }
         });
-        calculate();
     }
 
     /**
@@ -146,8 +151,9 @@ public class AirConsumptionForm extends Form {
      * Recalculate and update the values on screen.
      */
     public final void calculate() {
-        final String value = input.getText();
-        int verbruik = Integer.valueOf(value);
+//        final String value = input.getText();
+//        int verbruik = Integer.valueOf(value);
+        final int verbruik = Config.getInstance().getPersonalAir().intValue();
         
         l6200.setText("" + (6*(200-50))/verbruik);
         l6232.setText("" + (6*(232-50))/verbruik);
@@ -164,5 +170,9 @@ public class AirConsumptionForm extends Form {
         l20200.setText("" + (20*(200-50))/verbruik);
         l20232.setText("" + (20*(232-50))/verbruik);
         
+    }
+
+    void updateConfig() {
+        input.setText("" + Config.getInstance().getPersonalAir());
     }
 }

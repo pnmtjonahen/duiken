@@ -22,12 +22,7 @@ package nl.tjonahen.duiken.deco;
  * @author Philippe Tjon-A-Hen
  */
 public class DecoTable {
-    private final Config config;
     
-    public DecoTable(final Config config) {
-        this.config = config;
-    }
-
     /**
      * Calculates the surface air minutes for a single dive
      * @param maximumDiveDepth maximum dive depth
@@ -45,7 +40,7 @@ public class DecoTable {
 
         r = addDecostops(r, deco12, deco9, deco6, deco3);
 
-        if (maximumDiveDepth > 20 && config.isIncludeDeepStop()) {
+        if (maximumDiveDepth > 20 && Config.getInstance().isIncludeDeepStop().booleanValue()) {
             r = addDieptestops(r, maximumDiveDepth, deco12, deco9, deco6, deco3);
         }
         float bodemtijd = diveTime - r.getDescend().getTime() - (float)(r.getDeepStops().size() * 2);

@@ -35,8 +35,7 @@ class ConfigCommand extends Command {
     @Override
     public void actionPerformed(final ActionEvent evt) {
         evt.consume();
-        
-        
+        configForm.updateConfig();
         configForm.show();
         
     }
