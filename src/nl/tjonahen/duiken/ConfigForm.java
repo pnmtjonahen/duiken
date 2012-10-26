@@ -1,11 +1,31 @@
+/*
+ * Copyright (C) 2012 Philippe Tjon-A-Hen philippe@tjonahen.nl
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package nl.tjonahen.duiken;
 
 import com.codename1.io.Storage;
 import com.codename1.ui.Button;
 import com.codename1.ui.CheckBox;
 import com.codename1.ui.Command;
+import com.codename1.ui.Container;
 import com.codename1.ui.Form;
+import com.codename1.ui.Label;
+import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import nl.tjonahen.duiken.deco.Config;
 
@@ -15,15 +35,26 @@ import nl.tjonahen.duiken.deco.Config;
  */
 class ConfigForm extends Form {
     private CheckBox cb;
-
+    private TextField personal;
+            
     public void init(final Config config, final DecoTableForm mainForm) {
 
-        setLayout(new BoxLayout(BoxLayout.Y_AXIS));
-        
+        setLayout(new BorderLayout());
+        final Container cn = new Container(new BoxLayout(BoxLayout.Y_AXIS));
         cb = new CheckBox("Gebruik Diep Stop");
         cb.setSelected(config.isIncludeDeepStop());
-        addComponent(cb);
-        addComponent(new Button(new Command("Ok") {
+        cn.addComponent(cb);
+        
+//        personal = new TextField("16");
+//        personal.setConstraint(TextField.NUMERIC);
+//        Container input = new Container(new BoxLayout(BoxLayout.X_AXIS));
+//        
+//        input.addComponent(personal);
+//        input.addComponent(new Label("liter/minute"));
+//        cn.addComponent(input);
+        
+        addComponent(BorderLayout.NORTH, cn);
+        addComponent(BorderLayout.SOUTH, new Button(new Command("Ok") {
 
             @Override
             public void actionPerformed(ActionEvent evt) {

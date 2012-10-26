@@ -1,8 +1,25 @@
+/*
+ * Copyright (C) 2012 Philippe Tjon-A-Hen philippe@tjonahen.nl
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package nl.tjonahen.duiken;
 
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
+import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.animations.CommonTransitions;
 import com.codename1.ui.layouts.BorderLayout;
@@ -53,37 +70,24 @@ public class Duiken {
     private void showSplashAnimation() {
         Form splash = new Form();
         splash.setUIID("Splash");
-        splash.getContentPane().setUIID("Container");
-        splash.getTitleArea().setUIID("Container");
         BorderLayout border = new BorderLayout();
         border.setCenterBehavior(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE);
         splash.setLayout(border);
         splash.setScrollable(false);
         Label title = new Label("Duiken");
-        title.setUIID("SplashTitle");
+        title.setUIID("Splash");
         Label subtitle = new Label("By Philippe");
-        subtitle.setUIID("SplashSubTitle");
+        subtitle.setUIID("Splash");
         splash.addComponent(BorderLayout.NORTH, title);
         splash.addComponent(BorderLayout.SOUTH, subtitle);
-        Label beaker = new Label(res.getImage("dipnoi.png"));
-//        Label beakerLogo = new Label(res.getImage("beaker_logo.png"));
-        Container layeredLayout = new Container(new LayeredLayout());
-        splash.addComponent(BorderLayout.CENTER, layeredLayout);
-        layeredLayout.addComponent(beaker);
-        Container logoParent = new Container(new BorderLayout());
-        layeredLayout.addComponent(logoParent);
-//        logoParent.addComponent(BorderLayout.CENTER, beakerLogo);
-        splash.revalidate();
+        final Image image = res.getImage("dipnoi1.png");
         
-//        beakerLogo.setX(0);
-//        beakerLogo.setY(0);
-//        beakerLogo.setWidth(3);
-//        beakerLogo.setHeight(3);
-        logoParent.setShouldCalcPreferredSize(true);
-        logoParent.animateLayoutFade(2000, 0);
+        Label beaker = new Label(image.scaledHeight(320));
+        beaker.getStyle().setBgTransparency(0);
+        splash.addComponent(BorderLayout.CENTER, beaker);
+        
         
         splash.show();
-        splash.setTransitionOutAnimator(CommonTransitions.createFastSlide(CommonTransitions.SLIDE_VERTICAL, true, 300));
         new UITimer(new Runnable() {
             public void run() {
                 showMainUI();

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2012 Philippe Tjon-A-Hen philippe@tjonahen.nl
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package nl.tjonahen.duiken;
 
 import com.codename1.ui.Button;
@@ -37,7 +53,7 @@ public class AirConsumptionForm extends Form {
     public AirConsumptionForm() {
         super("Verbruik");
         Container main = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-        main.getStyle().setBgTransparency(255);
+//        main.getStyle().setBgTransparency(255);
         
         Container cnt = new Container(new GridLayout(1,3));
         input = new TextField("16");
@@ -74,8 +90,8 @@ public class AirConsumptionForm extends Form {
         l20232 = new Label("");
 
         cnt.addComponent(new Label("liters"));
-        cnt.addComponent(new Label("200 bar"));
-        cnt.addComponent(new Label("232 bar"));
+        cnt.addComponent(new Label("200-50 bar"));
+        cnt.addComponent(new Label("232-50 bar"));
 
         cnt.addComponent(new Label("6"));
         cnt.addComponent(l6200);
@@ -133,20 +149,20 @@ public class AirConsumptionForm extends Form {
         final String value = input.getText();
         int verbruik = Integer.valueOf(value);
         
-        l6200.setText("" + (6*200)/verbruik);
-        l6232.setText("" + (6*232)/verbruik);
-        l7200.setText("" + (7*200)/verbruik);
-        l7232.setText("" + (7*232)/verbruik);
-        l10200.setText("" + (10*200)/verbruik);
-        l10232.setText("" + (10*232)/verbruik);
-        l12200.setText("" + (12*200)/verbruik);
-        l12232.setText("" + (12*232)/verbruik);
-        l14200.setText("" + (14*200)/verbruik);
-        l14232.setText("" + (14*232)/verbruik);
-        l15200.setText("" + (15*200)/verbruik);
-        l15232.setText("" + (15*232)/verbruik);
-        l20200.setText("" + (20*200)/verbruik);
-        l20232.setText("" + (20*232)/verbruik);
+        l6200.setText("" + (6*(200-50))/verbruik);
+        l6232.setText("" + (6*(232-50))/verbruik);
+        l7200.setText("" + (7*(200-50))/verbruik);
+        l7232.setText("" + (7*(232-50))/verbruik);
+        l10200.setText("" + (10*(200-50))/verbruik);
+        l10232.setText("" + (10*(232-50))/verbruik);
+        l12200.setText("" + (12*(200-50))/verbruik);
+        l12232.setText("" + (12*(232-50))/verbruik);
+        l14200.setText("" + (14*(200-50))/verbruik);
+        l14232.setText("" + (14*(232-50))/verbruik);
+        l15200.setText("" + (15*(200-50))/verbruik);
+        l15232.setText("" + (15*(232-50))/verbruik);
+        l20200.setText("" + (20*(200-50))/verbruik);
+        l20232.setText("" + (20*(232-50))/verbruik);
         
     }
 }
