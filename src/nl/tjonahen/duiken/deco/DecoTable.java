@@ -16,13 +16,103 @@
  */
 package nl.tjonahen.duiken.deco;
 
+import com.codename1.util.MathUtil;
+
 /**
  * The static dciem based NOB deco table.
  *
  * @author Philippe Tjon-A-Hen
  */
 public class DecoTable {
+    private double hf;
+    private DecoTable() {}
     
+    private static DecoTable _instance;
+    
+    public static synchronized DecoTable getInstance() {
+        if (_instance == null) {
+            _instance = new DecoTable();
+            _instance.calculate(1.0);
+        }
+        return _instance;
+    }
+    
+    private Dive[] dives;
+
+    public Dive[] getDives() {
+        return dives;
+    }
+
+    public double getHf() {
+        return hf;
+    }
+    
+    public void calculate(final double hf) {
+        this.hf = hf;
+        dives = new Dive[table.length];
+        for (int i = 0; i < table.length; i++) {
+            final int mdd = table[i][0];
+            final int dt;
+            final int deco12;
+            final int deco9;
+            final int deco6;
+            final int deco3;
+
+            if (Config.getInstance().isSecondDive() 
+                    && !Config.getInstance().isCalculateNullDives().booleanValue() 
+                    && isNullDive(table[i][2], table[i][3], table[i][4], table[i][5]) ) {
+                dt = nulDive(mdd, hf);
+                if (dt > 0) { 
+                    deco12 =  0;
+                    deco9 =  0;
+                    deco6 =  0;
+                    deco3 =  0;
+                    final ResultSurfaceAirMinutes  total = calculateSurfaceAirMinutes(mdd,
+                                dt,
+                                deco12,
+                                deco9,
+                                deco6,
+                                deco3);
+
+                    dives[i] = new Dive();
+                    dives[i].setMaxmimumDiveDepthdd(mdd);
+                    dives[i].setDiveTime(dt);
+                    dives[i].setDeco12(deco12);
+                    dives[i].setDeco9(deco9);
+                    dives[i].setDeco6(deco6);
+                    dives[i].setDeco3(deco3);
+                    dives[i].setResultSurfaceAirMinutes(total);
+                    dives[i].setHg(getHg().charAt(i));
+                }
+            } else {
+                dt = (int) Math.ceil(table[i][1]/hf);
+                deco12 =  (int) Math.ceil(table[i][2]*hf);
+                deco9 =  (int) Math.ceil(table[i][3]*hf);
+                deco6 =  (int) Math.ceil(table[i][4]*hf);
+                deco3 =  (int) Math.ceil(table[i][5]*hf);
+                final ResultSurfaceAirMinutes  total = calculateSurfaceAirMinutes(mdd,
+                            dt,
+                            deco12,
+                            deco9,
+                            deco6,
+                            deco3);
+
+                dives[i] = new Dive();
+                dives[i].setMaxmimumDiveDepthdd(mdd);
+                dives[i].setDiveTime(dt);
+                dives[i].setDeco12(deco12);
+                dives[i].setDeco9(deco9);
+                dives[i].setDeco6(deco6);
+                dives[i].setDeco3(deco3);
+                dives[i].setResultSurfaceAirMinutes(total);
+                dives[i].setHg(getHg().charAt(i));
+            }            
+        }
+    }
+    
+     private boolean isNullDive(final int deco12, final int deco9, final int deco6, final int deco3) {
+         return deco12 == 0 && deco9 == 0 && deco6 == 0 && deco3 == 0;
+     }   
     /**
      * Calculates the surface air minutes for a single dive
      * @param maximumDiveDepth maximum dive depth
@@ -127,9 +217,6 @@ public class DecoTable {
         return new SurfaceAirMinutes((((float)mdd / 10.0F) + 1.0F), dt, mdd);
     }
 
-    public int[][] getTable() {
-        return table;
-    }
 
     public String[] getHeader() {
         return header;
@@ -249,4 +336,56 @@ public class DecoTable {
         {54, 15, 0, 7, 7, 11},
         {54, 20, 6, 6, 8, 25},};
     private static final String herhalings = "MNOJMGIKKLMFGIJKLMEFGHJKMNEFGHIJJKLMDEFHIJKLDEFGHIJKLCDFGHIJKMNCEFGIJKMNBCEGHJKMNBDFGIKLNBDFHJKBDGHKBDGIBDEHJ"; 
+    
+    public double getHf(int hg, int oi) {
+        return tabelb[hg][oi];
+    }
+    private static final double[][] tabelb = {
+        // 29   59   1:29  1:59 2:59 3:59 5:59 8:59 11:59 14:59 18:00
+        {  1.4, 1.2, 1.1,  1.1, 1.1, 1.1, 1.1, 1.1, 1.0,  1.0,  1.0 } , //a
+        {  1.5, 1.3, 1.2,  1.2, 1.1, 1.1, 1.1, 1.1, 1.1,  1.0,  1.0 } , //b 
+        {  1.6, 1.4, 1.3,  1.2, 1.2, 1.2, 1.1, 1.1, 1.1,  1.0,  1.0 } , //c 
+        {  1.8, 1.5, 1.4,  1.3, 1.3, 1.2, 1.2, 1.1, 1.1,  1.0,  1.0 } , //d 
+        {  1.9, 1.6, 1.5,  1.4, 1.3, 1.3, 1.2, 1.2, 1.1,  1.1,  1.0 } , //e 
+        {  2.0, 1.7, 1.6,  1.5, 1.4, 1.3, 1.3, 1.2, 1.1,  1.1,  1.0 } , //f 
+        {  0,   1.9, 1.7,  1.6, 1.5, 1.4, 1.3, 1.2, 1.1,  1.1,  1.0 } , //g 
+        {  0,     0, 1.9,  1.7, 1.6, 1.5, 1.4, 1.3, 1.1,  1.1,  1.1 } , //h 
+        {  0,     0, 2.0,  1.8, 1.7, 1.5, 1.4, 1.3, 1.1,  1.1,  1.1 } , //i 
+        {  0,     0,   0,  1.9, 1.8, 1.6, 1.5, 1.3, 1.2,  1.1,  1.1 } , //j 
+        {  0,     0,   0,  2.0, 1.9, 1.7, 1.5, 1.3, 1.2,  1.1,  1.1 } , //k 
+        {  0,     0,   0,    0, 2.0, 1.7, 1.6, 1.4, 1.2,  1.1,  1.1 } , //l 
+        {  0,     0,   0,    0,   0, 1.8, 1.6, 1.4, 1.2,  1.1,  1.1 } , //m 
+        {  0,     0,   0,    0,   0, 1.9, 1.7, 1.4, 1.2,  1.1,  1.1 } , //n 
+        {  0,     0,   0,    0,   0, 2.0, 1.7, 1.4, 1.2,  1.1,  1.1 }  //o 
+    };
+    private int nulDive(final int pMdd, final double pHf) {
+        for (int i = 0; i< mdds.length; i++) {
+            if (mdds[i] == pMdd) {
+                for (int j = 0; j < hfs.length; j++) {
+                    if (hfs[j] == pHf) {
+                        return tabelc[i][j];
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+    private static int[] mdds = {9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45};
+    private static double[] hfs = { 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 };
+    private static final int[][] tabelc = {
+       // 1.1  1.2  1.3  1.4  1.5  1.6  1.7  1.8  1.9  2.0
+        { 272, 250, 230, 214, 200, 187, 176, 166, 157, 150}, // 9
+        { 136, 125, 115, 107, 100,  93,  88,  83,  78,  75}, // 12
+        {  60,  55,  50,  45,  41,  38,  36,  34,  32,  31}, // 15
+        {  40,  35,  31,  29,  27,  26,  24,  23,  22,  21}, // 18
+        {  30,  25,  21,  19,  18,  17,  16,  15,  14,  13}, // 21
+        {  20,  18,  16,  15,  14,  13,  12,  12,  11,  11}, // 24
+        {  16,  14,  12,  11,  11,  10,   9,   9,   8,   8}, // 27
+        {  13,  11,  10,   9,   9,   8,   8,   7,   7,   7}, // 30
+        {  10,   9,   8,   8,   7,   7,   6,   6,   6,   6}, // 33
+        {   8,   7,   7,   6,   6,   6,   5,   5,   5,   5}, // 36
+        {   7,   6,   6,   5,   5,   5,   4,   4,   4,   4}, // 39
+        {   6,   5,   5,   5,   4,   4,   4,   3,   4,   3}, // 42
+        {   5,   5,   4,   4,   4,   3,   3,   3,   3,   3}, // 45
+    };
 }

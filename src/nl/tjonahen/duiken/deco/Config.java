@@ -27,9 +27,12 @@ public class Config implements Serializable {
     
     public static final String INCLUDE_DEEP_STOP = "includeDeepStop";
     public static final String PERSONAL_AIR = "personalAir";
-
+    public static final String CALCULATE_NULL_DIVE = "calculateNullDive";
+    private boolean secondDive = false;
+    
     private Boolean includeDeepStop;
     private Integer personalAir;
+    private Boolean calculateNullDives;
     
     private static Config _instance = null;
     public static synchronized Config getInstance() {
@@ -42,6 +45,15 @@ public class Config implements Serializable {
     private Config() {
     }
 
+    public boolean isSecondDive() {
+        return secondDive;
+    }
+
+    public void setSecondDive(boolean secondDive) {
+        this.secondDive = secondDive;
+    }
+
+    
     public Boolean isIncludeDeepStop() {
         return includeDeepStop;
     }
@@ -56,6 +68,14 @@ public class Config implements Serializable {
 
     public void setPersonalAir(Integer personalAir) {
         this.personalAir = personalAir;
+    }
+
+    public Boolean isCalculateNullDives() {
+        return calculateNullDives;
+    }
+
+    public void setCalculateNullDives(final Boolean calculateNullDives) {
+        this.calculateNullDives = calculateNullDives;
     }
     
     

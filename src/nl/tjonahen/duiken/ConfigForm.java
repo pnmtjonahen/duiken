@@ -28,20 +28,26 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import nl.tjonahen.duiken.deco.Config;
+import nl.tjonahen.duiken.deco.DecoTable;
 
 /**
  *
  * @author Philippe Tjon-A-Hen
  */
 class ConfigForm extends Form {
-    private CheckBox cb;
+    private CheckBox deepStop;
+    private CheckBox calculateNullDive;
     private TextField personal;
             
     public void init(final DecoTableForm mainForm) {
         setLayout(new BorderLayout());
         final Container cn = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-        cb = new CheckBox("Gebruik Diep Stop");
-        cn.addComponent(cb);
+        
+        deepStop = new CheckBox("Gebruik Diep Stop");
+        cn.addComponent(deepStop);
+
+        calculateNullDive = new CheckBox("Berekende nultijd duik (herhalings duik)");
+        cn.addComponent(calculateNullDive);
         
         personal = new TextField("");
         personal.setConstraint(TextField.NUMERIC);
@@ -57,12 +63,15 @@ class ConfigForm extends Form {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 evt.consume();
-                Config.getInstance().setIncludeDeepStop(cb.isSelected());
+                Config.getInstance().setIncludeDeepStop(deepStop.isSelected());
                 Storage.getInstance().writeObject(Config.INCLUDE_DEEP_STOP, Config.getInstance().isIncludeDeepStop());
                 final String value = personal.getText();
                 final Integer verbruik = Integer.valueOf(value);
                 Config.getInstance().setPersonalAir(verbruik);
                 Storage.getInstance().writeObject(Config.PERSONAL_AIR, verbruik);
+                Config.getInstance().setCalculateNullDives(calculateNullDive.isSelected());
+                Storage.getInstance().writeObject(Config.CALCULATE_NULL_DIVE, Config.getInstance().isCalculateNullDives());
+                DecoTable.getInstance().calculate(DecoTable.getInstance().getHf());
                 mainForm.refresh();
                 mainForm.showBack();
             }
@@ -84,10 +93,11 @@ class ConfigForm extends Form {
         super.actionCommand(cmd);
     }
 
-    void updateConfig() {
+    public void updateConfig() {
         final Config config = Config.getInstance();
-        cb.setSelected(config.isIncludeDeepStop());
+        deepStop.setSelected(config.isIncludeDeepStop());
         personal.setText("" + config.getPersonalAir());
+        calculateNullDive.setSelected(config.isCalculateNullDives());
     }
     
 }

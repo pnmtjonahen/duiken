@@ -17,7 +17,6 @@
 package nl.tjonahen.duiken;
 
 import com.codename1.ui.Container;
-import com.codename1.ui.Display;
 import com.codename1.ui.Label;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
@@ -50,11 +49,11 @@ public abstract class AbstractDiveContainer extends Container {
         int single = getStyle().getFont().charWidth('9');
         maximumDiveDepth.setPreferredSize(new Dimension(3 * single, 14));
         diveTime.setPreferredSize(new Dimension(4 * single, 14));
-        deco12.setPreferredSize(new Dimension(2 * single, 14));
-        deco9.setPreferredSize(new Dimension(2 * single, 14));
-        deco6.setPreferredSize(new Dimension(2 * single, 14));
-        deco3.setPreferredSize(new Dimension(3 * single, 14));
-        hg.setPreferredSize(new Dimension(3 * single, 14));
+        deco12.setPreferredSize(new Dimension(4 * single, 14));
+        deco9.setPreferredSize(new Dimension(4 * single, 14));
+        deco6.setPreferredSize(new Dimension(4 * single, 14));
+        deco3.setPreferredSize(new Dimension(4 * single, 14));
+        hg.setPreferredSize(new Dimension(4 * single, 14));
 
 
         setSurfaceAirMinutesLabelStyle(surfaceAirMinutes);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!--build_version=1.0-->
+    <!--build_version=1.1-->
     
     <!-- IMPORTANT!!! When building for ios: if you don't supply the certificate/provisioning profile etc. you will not 
     be able to run on a regular device (only on jailbroken devices) in that case your package name MUST be: com.codename1.demos.lwuitdemo
@@ -51,14 +51,14 @@
     <taskdef name="codeNameOne" classname="com.codename1.build.client.CodeNameOneBuildTask" classpath="CodeNameOneBuildClient.jar"/>
 
     <target name="-pre-compile">
-        <echo>Compile is forcing CLDC 1.1 level API compliance for maximum device compatibility. This allows smaller
+        <echo>Compile is forcing compliance to the supported API's/features for maximum device compatibility. This allows smaller
         code size and wider device support</echo>
         <mkdir dir="build/tmp"/>
         <javac destdir="build/tmp"
             source="1.5"
             target="1.5"
             bootclasspath="lib/CLDC11.jar"
-            classpath="JavaSE.jar:${build.classes.dir}">
+            classpath="${javac.classpath}:${build.classes.dir}">
             <src path="${src.dir}"/>
         </javac>        
     </target>
@@ -234,6 +234,39 @@
       
     <target name="-pre-init">
         <property name="application.args" value="${codename1.packageName}.${codename1.mainName}"/>
+        <property name="javac.source" value="1.5" />
+        <property name="javac.target" value="1.5" />
+    </target>
+
+    <target name="copy-windows-override">
+        <mkdir dir="${build.classes.dir}" />
+        <mkdir dir="override" />
+        <copy todir="${build.classes.dir}">
+            <fileset dir="override" includes="**/*_win.ovr"/>
+            <fileset dir="override" includes="**/*_win-phone.ovr"/>
+            <fileset dir="override" includes="**/*_win-tab.ovr"/>
+            <fileset dir="override" includes="**/*_phone.ovr"/>
+            <fileset dir="override" includes="**/*_tablet.ovr"/>
+        </copy>
+        <mkdir dir="native/win" />
+        <copy todir="${build.classes.dir}">
+            <fileset dir="native/win" includes="**/*"/>
+        </copy>
+    </target>
+
+    <target name="build-for-win-device" depends="clean,copy-windows-override,jar,clean-override">
+        <codeNameOne 
+            jarFile="${dist.jar}"
+            displayName="${codename1.displayName}"
+            packageName = "${codename1.packageName}"
+            mainClassName = "${codename1.mainName}"
+            version="${codename1.version}"
+            icon="${codename1.icon}"
+            vendor="${codename1.vendor}"
+            subtitle="${codename1.secondaryTitle}"
+            
+            targetType="win"
+            />
     </target>
         
 </project>

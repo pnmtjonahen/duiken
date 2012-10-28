@@ -16,6 +16,7 @@
  */
 package nl.tjonahen.duiken;
 
+import com.codename1.io.Storage;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
@@ -25,6 +26,7 @@ import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.codename1.ui.util.UITimer;
 import java.io.IOException;
+import nl.tjonahen.duiken.deco.Config;
 
 /**
  * Duiken (Dutch for diving) main entry point of the application.
@@ -56,6 +58,7 @@ public class Duiken {
             current.show();
             return;
         }
+        setupConfig();
         final DecoTableForm mainForm = new DecoTableForm();
         mainForm.show();
     }
@@ -66,6 +69,37 @@ public class Duiken {
 
     public void destroy() {
     }
+    private void setupConfig() {
+        final Storage storage = Storage.getInstance();
+
+        Config config = Config.getInstance();
+        config.setIncludeDeepStop(Boolean.FALSE);
+        config.setPersonalAir(new Integer(16));
+        config.setCalculateNullDives(Boolean.FALSE);
+        
+        Object object = storage.readObject(Config.INCLUDE_DEEP_STOP);
+        if (object == null) {
+            storage.writeObject(Config.INCLUDE_DEEP_STOP, config.isIncludeDeepStop());
+        } else {
+            config.setIncludeDeepStop((Boolean) object);
+            
+        }
+        object = storage.readObject(Config.PERSONAL_AIR);
+        if (object == null) {
+            storage.writeObject(Config.PERSONAL_AIR, config.getPersonalAir());
+        } else {
+            config.setPersonalAir((Integer) object);
+        }
+        
+        object = storage.readObject(Config.CALCULATE_NULL_DIVE);
+        if (object == null) {
+            storage.writeObject(Config.CALCULATE_NULL_DIVE, config.isCalculateNullDives());
+        } else {
+            config.setCalculateNullDives((Boolean)object);
+        }
+        storage.flushStorageCache();
+    }
+    
     
     private void showSplashAnimation() {
         Form splash = new Form();

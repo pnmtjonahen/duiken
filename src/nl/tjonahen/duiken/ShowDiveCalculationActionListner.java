@@ -25,6 +25,8 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.GridLayout;
+import nl.tjonahen.duiken.deco.Config;
+import nl.tjonahen.duiken.deco.DecoTable;
 import nl.tjonahen.duiken.deco.Dive;
 import nl.tjonahen.duiken.deco.Stop;
 
@@ -34,10 +36,10 @@ import nl.tjonahen.duiken.deco.Stop;
  * @author Philippe Tjon-A-Hen
  */
 public class ShowDiveCalculationActionListner implements ActionListener {
-    private final Form previousForm;
+    private final DecoTableForm previousForm;
     private final AirConsumptionForm airConsumptionForm;
     
-    public ShowDiveCalculationActionListner(final AirConsumptionForm airConsumptionForm, final Form previousForm) {
+    public ShowDiveCalculationActionListner(final AirConsumptionForm airConsumptionForm, final DecoTableForm previousForm) {
         this.previousForm = previousForm;
         this.airConsumptionForm = airConsumptionForm;
     }
@@ -48,7 +50,11 @@ public class ShowDiveCalculationActionListner implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         evt.consume();
-        final Form toonDuikBerekeningForm = new Form("Duik berekening");
+        String name = "Duik berekening";
+        if (Config.getInstance().isSecondDive()) {
+            name += " - Herhaling (hf=" + DecoTable.getInstance().getHf() + ")";
+        }
+        final Form toonDuikBerekeningForm = new Form(name);
         final List list = (List) evt.getSource();
         final int selectedIndex = list.getModel().getSelectedIndex();
         final Dive duik = (Dive) list.getModel().getItemAt(selectedIndex);
@@ -68,6 +74,11 @@ public class ShowDiveCalculationActionListner implements ActionListener {
             }
         });
         toonDuikBerekeningForm.addCommand(new AirConsumptionCommand(airConsumptionForm, toonDuikBerekeningForm));
+        if (Config.getInstance().isSecondDive()) {
+            toonDuikBerekeningForm.addCommand(new FirstDiveCommand(previousForm));
+        } else {
+            toonDuikBerekeningForm.addCommand(new SurfaceTimeCommand(toonDuikBerekeningForm, previousForm, duik.getHg()));
+        }
 
         toonDuikBerekeningForm.show();
     }
