@@ -55,6 +55,7 @@ public class ShowDiveCalculationActionListner implements ActionListener {
             name += " - Herhaling (hf=" + DecoTable.getInstance().getHf() + ")";
         }
         final Form toonDuikBerekeningForm = new Form(name);
+        toonDuikBerekeningForm.setTensileDragEnabled(false);
         final List list = (List) evt.getSource();
         final int selectedIndex = list.getModel().getSelectedIndex();
         final Dive duik = (Dive) list.getModel().getItemAt(selectedIndex);
@@ -66,6 +67,7 @@ public class ShowDiveCalculationActionListner implements ActionListener {
         addTotals(cnt, duik);
 
         cnt.setScrollableY(true);
+        cnt.setTensileDragEnabled(false);
         toonDuikBerekeningForm.addComponent(cnt);
         toonDuikBerekeningForm.setBackCommand(new Command("Exit") {
             @Override

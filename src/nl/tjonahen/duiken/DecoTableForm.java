@@ -18,11 +18,17 @@ package nl.tjonahen.duiken;
 
 import com.codename1.io.Storage;
 import com.codename1.ui.Command;
+import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
+import com.codename1.ui.Graphics;
+import com.codename1.ui.Label;
 import com.codename1.ui.List;
+import com.codename1.ui.animations.Transition;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.GridLayout;
 import nl.tjonahen.duiken.deco.Config;
 import nl.tjonahen.duiken.deco.DecoTable;
 
@@ -47,7 +53,14 @@ public class DecoTableForm extends Form {
         Command exitCommand = new Command("Exit") {
             @Override
             public void actionPerformed(ActionEvent ev) {
-                Display.getInstance().exitApplication();
+                if (Config.getInstance().isSecondDive()) {
+                    Config.getInstance().setSecondDive(false);
+                    DecoTable.getInstance().calculate(1.0);
+                    refresh();
+                    showBack();
+                } else {
+                    Display.getInstance().exitApplication();
+                }
             }
         };
         setBackCommand(exitCommand);
@@ -55,11 +68,39 @@ public class DecoTableForm extends Form {
         addCommand(new ConfigCommand(configForm));
 
         setScrollable(false);
+        setTensileDragEnabled(false);
 
-
-        setLayout(new BorderLayout());
+        setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        final Container cnt = new Container(new GridLayout(1, 8));
+        final Label mdd = new Label("mdd");
+        mdd.setRTL(focusScrolling);
+        cnt.addComponent(mdd);
+        final Label dt = new Label("dt");
+        dt.setRTL(true);
+        cnt.addComponent(dt);
+        final Label deco12 = new Label("12");
+        deco12.setRTL(true);
+        cnt.addComponent(deco12);
+        final Label deco9 = new Label("9");
+        deco9.setRTL(true);
+        cnt.addComponent(deco9);
+        final Label deco6 = new Label("6");
+        deco6.setRTL(true);
+        cnt.addComponent(deco6);
+        final Label deco3 = new Label("3");
+        deco3.setRTL(true);
+        cnt.addComponent(deco3);
+        final Label hg = new Label("hg");
+        hg.setRTL(true);
+        cnt.addComponent(hg);
+        final Label ovm = new Label("ovm");
+//        ovm.setRTL(true);
+        final int single = getStyle().getFont().charWidth('9');
+        ovm.setPreferredW(5 * single);
+        cnt.addComponent(ovm);
+        addComponent(cnt);
         current = getList();
-        addComponent(BorderLayout.CENTER, current);
+        addComponent(current);
 
     }
     

@@ -114,7 +114,7 @@ class SurfaceTimeCommand extends Command {
                 } else {
                     final Dialog d = new Dialog("Fout");
                     d.setLayout(new BorderLayout());
-                    d.addComponent(BorderLayout.NORTH, new Label("Herhalings duik is niet mogelijk!"));
+                    d.addComponent(BorderLayout.NORTH, new Label("Herhalings duik \nis niet mogelijk!"));
                     d.addComponent(BorderLayout.SOUTH, new Button(new Command("Ok")));
                     d.setDialogType(Dialog.TYPE_ERROR);
                     d.show();

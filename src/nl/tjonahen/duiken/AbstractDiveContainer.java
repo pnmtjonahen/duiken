@@ -21,6 +21,7 @@ import com.codename1.ui.Label;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.GridLayout;
 import nl.tjonahen.duiken.deco.Dive;
 
 /**
@@ -42,22 +43,30 @@ public abstract class AbstractDiveContainer extends Container {
      * Constructor
      */
     public AbstractDiveContainer() {
-        setLayout(new BorderLayout());
-        Container cnt = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        Container cnt = new Container(new GridLayout(1, 8));
         
         
         int single = getStyle().getFont().charWidth('9');
-        maximumDiveDepth.setPreferredSize(new Dimension(3 * single, 14));
-        diveTime.setPreferredSize(new Dimension(4 * single, 14));
-        deco12.setPreferredSize(new Dimension(4 * single, 14));
-        deco9.setPreferredSize(new Dimension(4 * single, 14));
-        deco6.setPreferredSize(new Dimension(4 * single, 14));
-        deco3.setPreferredSize(new Dimension(4 * single, 14));
-        hg.setPreferredSize(new Dimension(4 * single, 14));
+//        maximumDiveDepth.setPreferredSize(new Dimension(3 * single, 14));
+//        diveTime.setPreferredSize(new Dimension(4 * single, 14));
+//        deco12.setPreferredSize(new Dimension(4 * single, 14));
+//        deco9.setPreferredSize(new Dimension(4 * single, 14));
+//        deco6.setPreferredSize(new Dimension(4 * single, 14));
+//        deco3.setPreferredSize(new Dimension(4 * single, 14));
+//        hg.setPreferredW(4 * single);
+        maximumDiveDepth.setRTL(true);
+        diveTime.setRTL(true);
+        deco12.setRTL(true);
+        deco9.setRTL(true);
+        deco6.setRTL(true);
+        deco3.setRTL(true);
+        hg.setRTL(true);
 
 
         setSurfaceAirMinutesLabelStyle(surfaceAirMinutes);
-        
+        surfaceAirMinutes.setPreferredW(5 * single);
+        surfaceAirMinutes.setRTL(true);
         cnt.addComponent(maximumDiveDepth);
         cnt.addComponent(diveTime);
         cnt.addComponent(deco12);
@@ -66,7 +75,7 @@ public abstract class AbstractDiveContainer extends Container {
         cnt.addComponent(deco3);
         cnt.addComponent(hg);
         cnt.addComponent(surfaceAirMinutes);
-        addComponent(BorderLayout.CENTER, cnt);
+        addComponent(cnt);
 
     }
     

@@ -17,11 +17,14 @@
 package nl.tjonahen.duiken;
 
 import com.codename1.io.Storage;
+import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.codename1.ui.util.UITimer;
@@ -104,17 +107,34 @@ public class Duiken {
     private void showSplashAnimation() {
         Form splash = new Form();
         BorderLayout border = new BorderLayout();
-        border.setCenterBehavior(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE);
+//        border.setCenterBehavior(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE);
         splash.setLayout(border);
         splash.setScrollable(false);
         Label title = new Label("Duiken");
-        Label subtitle = new Label("By Philippe");
+        Label subtitle = new Label("Door Philippe");
         splash.addComponent(BorderLayout.NORTH, title);
         splash.addComponent(BorderLayout.SOUTH, subtitle);
         final Image image = res.getImage("dipnoi.png");
         
         Label beaker = new Label(image.scaledWidth(Display.getInstance().getDisplayWidth() - 10));
-        splash.addComponent(BorderLayout.CENTER, beaker);
+        final Container cnt = new Container(new BorderLayout());
+        
+        final Container plan = new Container(new GridLayout(1, 3));
+        
+        plan.addComponent(new Label(""));
+        plan.addComponent(new Label("Plan je duik"));
+        plan.addComponent(new Label(""));
+        cnt.addComponent(BorderLayout.NORTH, plan);
+
+        cnt.addComponent(BorderLayout.CENTER, beaker);
+        
+        final Container duik = new Container(new GridLayout(1, 3));
+        duik.addComponent(new Label(""));
+        duik.addComponent(new Label("Duik je plan"));
+        duik.addComponent(new Label(""));
+        cnt.addComponent(BorderLayout.SOUTH, duik);
+
+        splash.addComponent(BorderLayout.CENTER, cnt);
         
         
         splash.show();
