@@ -85,7 +85,7 @@ public class DecoTable {
                     dives[i].setHg(getHg().charAt(i));
                 }
             } else {
-                dt = (int) Math.ceil(table[i][1]/hf);
+                dt = (int) Math.floor(table[i][1]/hf);
                 deco12 =  (int) Math.ceil(table[i][2]*hf);
                 deco9 =  (int) Math.ceil(table[i][3]*hf);
                 deco6 =  (int) Math.ceil(table[i][4]*hf);

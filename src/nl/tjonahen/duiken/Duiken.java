@@ -23,8 +23,8 @@ import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.GridLayout;
+import com.codename1.ui.plaf.LookAndFeel;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.codename1.ui.util.UITimer;
@@ -48,6 +48,7 @@ public class Duiken {
             if (Display.getInstance().canForceOrientation()) {
                 Display.getInstance().lockOrientation(false);
             }
+            UIManager.getInstance().getLookAndFeel().setDefaultTensileDrag(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,6 +62,7 @@ public class Duiken {
             current.show();
             return;
         }
+        
         setupConfig();
         final DecoTableForm mainForm = new DecoTableForm();
         mainForm.show();

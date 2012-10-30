@@ -105,6 +105,7 @@ public class Dive {
         if (value == 0) {
             return "";
         } else {
+//            final String v = "   " + value;
             return "" + value;
         }
     }

@@ -16,21 +16,26 @@
  */
 package nl.tjonahen.duiken;
 
+import com.codename1.ui.Container;
+import com.codename1.ui.Display;
 import com.codename1.ui.Label;
+import com.codename1.ui.geom.Dimension;
+import com.codename1.ui.layouts.GridLayout;
 
 /**
- * Dive container who styles the surfaceAirMinutes Label as an error label.
- * @author Philippe Tjon-A-Hen
+ *
+ * @author Philippe Tjon-A-Hen philippe@tjonahen.nl
  */
-public class ImpossibleDiveContainer extends AbstractDiveContainer {
+public class DiveContainerGridLayout extends GridLayout {
+    private final Label surfaceAirMinutes;
+    public DiveContainerGridLayout(final Label surfaceAirMinutes) {
+        super(1,8);
+        this.surfaceAirMinutes = surfaceAirMinutes;
+    }
 
-    /**
-     * {@inheritDoc } 
-     */
     @Override
-    protected void setSurfaceAirMinutesLabelStyle(final Label surfaceAirMinutes) {
-        surfaceAirMinutes.getStyle().setBgColor(0xFF0000);
-        surfaceAirMinutes.getStyle().setBgTransparency(128);
+    public Dimension getPreferredSize(final Container parent) {
+        return new Dimension(Display.getInstance().getDisplayWidth()-100, 20);
     }
     
 }

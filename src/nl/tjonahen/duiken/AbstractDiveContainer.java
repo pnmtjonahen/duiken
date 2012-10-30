@@ -18,8 +18,6 @@ package nl.tjonahen.duiken;
 
 import com.codename1.ui.Container;
 import com.codename1.ui.Label;
-import com.codename1.ui.geom.Dimension;
-import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.GridLayout;
 import nl.tjonahen.duiken.deco.Dive;
@@ -44,17 +42,10 @@ public abstract class AbstractDiveContainer extends Container {
      */
     public AbstractDiveContainer() {
         setLayout(new BoxLayout(BoxLayout.Y_AXIS));
-        Container cnt = new Container(new GridLayout(1, 8));
+        
+        Container cnt = new Container(new GridLayout(1, 7));
         
         
-        int single = getStyle().getFont().charWidth('9');
-//        maximumDiveDepth.setPreferredSize(new Dimension(3 * single, 14));
-//        diveTime.setPreferredSize(new Dimension(4 * single, 14));
-//        deco12.setPreferredSize(new Dimension(4 * single, 14));
-//        deco9.setPreferredSize(new Dimension(4 * single, 14));
-//        deco6.setPreferredSize(new Dimension(4 * single, 14));
-//        deco3.setPreferredSize(new Dimension(4 * single, 14));
-//        hg.setPreferredW(4 * single);
         maximumDiveDepth.setRTL(true);
         diveTime.setRTL(true);
         deco12.setRTL(true);
@@ -62,11 +53,12 @@ public abstract class AbstractDiveContainer extends Container {
         deco6.setRTL(true);
         deco3.setRTL(true);
         hg.setRTL(true);
-
-
         setSurfaceAirMinutesLabelStyle(surfaceAirMinutes);
-        surfaceAirMinutes.setPreferredW(5 * single);
+        surfaceAirMinutes.setEndsWith3Points(false);
+        surfaceAirMinutes.setTickerEnabled(true);
+        
         surfaceAirMinutes.setRTL(true);
+        
         cnt.addComponent(maximumDiveDepth);
         cnt.addComponent(diveTime);
         cnt.addComponent(deco12);
@@ -74,7 +66,9 @@ public abstract class AbstractDiveContainer extends Container {
         cnt.addComponent(deco6);
         cnt.addComponent(deco3);
         cnt.addComponent(hg);
-        cnt.addComponent(surfaceAirMinutes);
+        
+//        cnt.addComponent(surfaceAirMinutes);
+        
         addComponent(cnt);
 
     }
@@ -91,7 +85,7 @@ public abstract class AbstractDiveContainer extends Container {
      */
     public void setDuik(final Dive dive) {
         maximumDiveDepth.setText("" + dive.getMaximumDiveDepth());
-        diveTime.setText("" + dive.getDiveTime());
+        diveTime.setText(dive.getDisplayValue(dive.getDiveTime()));
         deco12.setText(dive.getDisplayValue(dive.getDeco12()));
         deco9.setText(dive.getDisplayValue(dive.getDeco9()));
         deco6.setText(dive.getDisplayValue(dive.getDeco6()));
@@ -99,7 +93,8 @@ public abstract class AbstractDiveContainer extends Container {
         if (dive.getResultSurfaceAirMinutes().getBottom().getTime() < 0.0) {
             surfaceAirMinutes.setText("Error");
         } else {
-            surfaceAirMinutes.setText(dive.getDisplayValue(dive.getResultSurfaceAirMinutes().total()));
+            surfaceAirMinutes.setText(dive.getDisplayValue(dive.getResultSurfaceAirMinutes().total()) + "  ");
+            surfaceAirMinutes.startTicker();
         }
         hg.setText("" + dive.getHg());
     }
