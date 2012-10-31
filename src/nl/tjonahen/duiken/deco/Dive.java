@@ -101,7 +101,7 @@ public class Dive {
      * @param value -
      * @return the value in a displayable way (0 zero is not displayed)
      */
-    public String getDisplayValue(final int value) {
+    public static String getDisplayValue(final int value) {
         if (value == 0) {
             return "";
         } else {
@@ -115,7 +115,7 @@ public class Dive {
      * @param value -
      * @return the value in a displayable way (2 digits float)
      */
-    public String getDisplayValue(final float value) {
+    public static String getDisplayValue(final float value) {
         return "" + Math.floor(value*100f + 0.5f) / 100f;
     }
     /**
@@ -123,7 +123,7 @@ public class Dive {
      * @param value -
      * @return the value in a displayable way (0 zero is not displayed)
      */
-    public String getDisplayValue(final char value) {
+    public static String getDisplayValue(final char value) {
         return "" + value;
     }
 }

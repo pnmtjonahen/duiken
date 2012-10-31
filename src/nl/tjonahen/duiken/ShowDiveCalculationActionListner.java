@@ -85,18 +85,18 @@ public class ShowDiveCalculationActionListner implements ActionListener {
         toonDuikBerekeningForm.show();
     }
 
-    private void addOvmBerekeningContainer(final Container dialog, final Dive duik) {
+    private void addOvmBerekeningContainer(final Container dialog, final Dive dive) {
         int rows = 4;
-        if (duik.getResultSurfaceAirMinutes().getSafetyStop().isValid()) {
+        if (dive.getResultSurfaceAirMinutes().getSafetyStop().isValid()) {
             rows++;
         }
-        int diep = duik.getResultSurfaceAirMinutes().getDeepStops().size();
+        int diep = dive.getResultSurfaceAirMinutes().getDeepStops().size();
         if (diep > 0) {
             rows += diep;
             rows++;
         }
 
-        int deco = duik.getResultSurfaceAirMinutes().getDecoStops().size();
+        int deco = dive.getResultSurfaceAirMinutes().getDecoStops().size();
         if (deco > 0) {
             rows += deco;
             rows++;
@@ -110,24 +110,24 @@ public class ShowDiveCalculationActionListner implements ActionListener {
         cnt.addComponent(new Label("ovm"));
 
         cnt.addComponent(new Label("Afdaling"));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getDescend().getAveragePressure())));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getDescend().getTime())));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getDescend().calc())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getDescend().getAveragePressure())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getDescend().getTime())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getDescend().calc())));
 
         cnt.addComponent(new Label("Bodem"));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getBottom().getAveragePressure())));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getBottom().getTime())));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getBottom().calc())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getBottom().getAveragePressure())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getBottom().getTime())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getBottom().calc())));
 
         cnt.addComponent(new Label("Opstijging"));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getAscend().getAveragePressure())));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getAscend().getTime())));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getAscend().calc())));
-        if (duik.getResultSurfaceAirMinutes().getSafetyStop().isValid()) {
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getAscend().getAveragePressure())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getAscend().getTime())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getAscend().calc())));
+        if (dive.getResultSurfaceAirMinutes().getSafetyStop().isValid()) {
             cnt.addComponent(new Label("VStop"));
-            cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getSafetyStop().getAveragePressure())));
-            cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getSafetyStop().getTime())));
-            cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getSafetyStop().calc())));
+            cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getSafetyStop().getAveragePressure())));
+            cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getSafetyStop().getTime())));
+            cnt.addComponent(new Label(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().getSafetyStop().calc())));
         }
         if (diep > 0) {
             cnt.addComponent(new Label("DiepS"));
@@ -135,11 +135,11 @@ public class ShowDiveCalculationActionListner implements ActionListener {
             cnt.addComponent(new Label(""));
             cnt.addComponent(new Label(""));
 
-            for (Stop stop : duik.getResultSurfaceAirMinutes().getDeepStops()) {
-                cnt.addComponent(new Label(duik.getDisplayValue(stop.getSurfaceAirMinutes().getDepth())));
-                cnt.addComponent(new Label(duik.getDisplayValue(stop.getSurfaceAirMinutes().getAveragePressure())));
-                cnt.addComponent(new Label(duik.getDisplayValue(stop.getSurfaceAirMinutes().getTime())));
-                cnt.addComponent(new Label(duik.getDisplayValue(stop.getSurfaceAirMinutes().calc())));
+            for (Stop stop : dive.getResultSurfaceAirMinutes().getDeepStops()) {
+                cnt.addComponent(new Label(Dive.getDisplayValue(stop.getSurfaceAirMinutes().getDepth())));
+                cnt.addComponent(new Label(Dive.getDisplayValue(stop.getSurfaceAirMinutes().getAveragePressure())));
+                cnt.addComponent(new Label(Dive.getDisplayValue(stop.getSurfaceAirMinutes().getTime())));
+                cnt.addComponent(new Label(Dive.getDisplayValue(stop.getSurfaceAirMinutes().calc())));
 
             }
 
@@ -150,11 +150,11 @@ public class ShowDiveCalculationActionListner implements ActionListener {
             cnt.addComponent(new Label(""));
             cnt.addComponent(new Label(""));
 
-            for (Stop stop : duik.getResultSurfaceAirMinutes().getDecoStops()) {
-                cnt.addComponent(new Label(duik.getDisplayValue(stop.getSurfaceAirMinutes().getDepth())));
-                cnt.addComponent(new Label(duik.getDisplayValue(stop.getSurfaceAirMinutes().getAveragePressure())));
-                cnt.addComponent(new Label(duik.getDisplayValue(stop.getSurfaceAirMinutes().getTime())));
-                cnt.addComponent(new Label(duik.getDisplayValue(stop.getSurfaceAirMinutes().calc())));
+            for (Stop stop : dive.getResultSurfaceAirMinutes().getDecoStops()) {
+                cnt.addComponent(new Label(Dive.getDisplayValue(stop.getSurfaceAirMinutes().getDepth())));
+                cnt.addComponent(new Label(Dive.getDisplayValue(stop.getSurfaceAirMinutes().getAveragePressure())));
+                cnt.addComponent(new Label(Dive.getDisplayValue(stop.getSurfaceAirMinutes().getTime())));
+                cnt.addComponent(new Label(Dive.getDisplayValue(stop.getSurfaceAirMinutes().calc())));
 
             }
 
@@ -163,18 +163,18 @@ public class ShowDiveCalculationActionListner implements ActionListener {
         cnt.addComponent(new Label(""));
         cnt.addComponent(new Label("Totaal"));
         cnt.addComponent(new Label("="));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().total())));
+        cnt.addComponent(new Label(dive.getDisplayValue(dive.getResultSurfaceAirMinutes().total())));
 //        dialog.getStyle().setBgTransparency(255);
         dialog.addComponent(cnt);
     }
     
     private void addTotals(final Container dialog, final Dive duik) {
-        String calc = duik.getDisplayValue(duik.getDiveTime()) 
-                + " - " + duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getDescend().getTime());
+        String calc = Dive.getDisplayValue(duik.getDiveTime()) 
+                + " - " + Dive.getDisplayValue(duik.getResultSurfaceAirMinutes().getDescend().getTime());
         int diepte = duik.getMaximumDiveDepth();
         for (Stop stop : duik.getResultSurfaceAirMinutes().getDeepStops()) {
             float tijd = (diepte - stop.getDepth()) / 10F;
-            calc += " - " + duik.getDisplayValue(tijd) + " - 2"; 
+            calc += " - " + Dive.getDisplayValue(tijd) + " - 2"; 
             diepte = stop.getDepth();
         }
         dialog.addComponent(new Label("bt brk. = " + calc + "  "));
@@ -182,18 +182,18 @@ public class ShowDiveCalculationActionListner implements ActionListener {
         
         cnt.addComponent(new Label("bt"));
         cnt.addComponent(new Label("="));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().getBottom().getTime())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(duik.getResultSurfaceAirMinutes().getBottom().getTime())));
 
         cnt.addComponent(new Label("totale dt"));
         cnt.addComponent(new Label("="));
-        cnt.addComponent(new Label(duik.getDisplayValue(duik.getResultSurfaceAirMinutes().totalTime())));
+        cnt.addComponent(new Label(Dive.getDisplayValue(duik.getResultSurfaceAirMinutes().totalTime())));
         cnt.addComponent(new Label(""));
         cnt.addComponent(new Label(""));
         cnt.addComponent(new Label(""));
         dialog.addComponent(cnt);
     }
 
-    private void addHeader(final Container cnt, final Dive duik) {
+    private void addHeader(final Container cnt, final Dive dive) {
         final Container header = new Container(new GridLayout(2, 7));
         
         header.addComponent(new Label("mdd"));
@@ -205,13 +205,13 @@ public class ShowDiveCalculationActionListner implements ActionListener {
         header.addComponent(new Label("hg"));
         
 
-        header.addComponent(new Label(duik.getDisplayValue(duik.getMaximumDiveDepth())));
-        header.addComponent(new Label(duik.getDisplayValue(duik.getDiveTime())));
-        header.addComponent(new Label(duik.getDisplayValue(duik.getDeco12())));
-        header.addComponent(new Label(duik.getDisplayValue(duik.getDeco9())));
-        header.addComponent(new Label(duik.getDisplayValue(duik.getDeco6())));
-        header.addComponent(new Label(duik.getDisplayValue(duik.getDeco3())));
-        header.addComponent(new Label(duik.getDisplayValue(duik.getHg())));
+        header.addComponent(new Label(Dive.getDisplayValue(dive.getMaximumDiveDepth())));
+        header.addComponent(new Label(Dive.getDisplayValue(dive.getDiveTime())));
+        header.addComponent(new Label(Dive.getDisplayValue(dive.getDeco12())));
+        header.addComponent(new Label(Dive.getDisplayValue(dive.getDeco9())));
+        header.addComponent(new Label(Dive.getDisplayValue(dive.getDeco6())));
+        header.addComponent(new Label(Dive.getDisplayValue(dive.getDeco3())));
+        header.addComponent(new Label(Dive.getDisplayValue(dive.getHg())));
                 
         
         cnt.addComponent(header);

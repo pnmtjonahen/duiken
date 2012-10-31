@@ -85,15 +85,15 @@ public abstract class AbstractDiveContainer extends Container {
      */
     public void setDuik(final Dive dive) {
         maximumDiveDepth.setText("" + dive.getMaximumDiveDepth());
-        diveTime.setText(dive.getDisplayValue(dive.getDiveTime()));
-        deco12.setText(dive.getDisplayValue(dive.getDeco12()));
-        deco9.setText(dive.getDisplayValue(dive.getDeco9()));
-        deco6.setText(dive.getDisplayValue(dive.getDeco6()));
-        deco3.setText(dive.getDisplayValue(dive.getDeco3()));
+        diveTime.setText(Dive.getDisplayValue(dive.getDiveTime()));
+        deco12.setText(Dive.getDisplayValue(dive.getDeco12()));
+        deco9.setText(Dive.getDisplayValue(dive.getDeco9()));
+        deco6.setText(Dive.getDisplayValue(dive.getDeco6()));
+        deco3.setText(Dive.getDisplayValue(dive.getDeco3()));
         if (dive.getResultSurfaceAirMinutes().getBottom().getTime() < 0.0) {
             surfaceAirMinutes.setText("Error");
         } else {
-            surfaceAirMinutes.setText(dive.getDisplayValue(dive.getResultSurfaceAirMinutes().total()) + "  ");
+            surfaceAirMinutes.setText(Dive.getDisplayValue(dive.getResultSurfaceAirMinutes().total()) + "  ");
             surfaceAirMinutes.startTicker();
         }
         hg.setText("" + dive.getHg());
