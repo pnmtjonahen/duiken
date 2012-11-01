@@ -37,7 +37,6 @@ import nl.tjonahen.duiken.deco.DecoTable;
 class ConfigForm extends Form {
     private CheckBox deepStop;
     private CheckBox calculateNullDive;
-    private TextField personal;
             
     public void init(final DecoTableForm mainForm) {
         setLayout(new BorderLayout());
@@ -49,14 +48,7 @@ class ConfigForm extends Form {
         calculateNullDive = new CheckBox("Berekende nultijd duik (herhalings duik)");
         cn.addComponent(calculateNullDive);
         
-        personal = new TextField("");
-        personal.setConstraint(TextField.NUMERIC);
-        Container input = new Container(new BoxLayout(BoxLayout.X_AXIS));
-        
-        input.addComponent(personal);
-        input.addComponent(new Label("liter/minute"));
-        cn.addComponent(input);
-        
+       
         addComponent(BorderLayout.NORTH, cn);
         addComponent(BorderLayout.SOUTH, new Button(new Command("Ok") {
 
@@ -65,10 +57,6 @@ class ConfigForm extends Form {
                 evt.consume();
                 Config.getInstance().setIncludeDeepStop(deepStop.isSelected());
                 Storage.getInstance().writeObject(Config.INCLUDE_DEEP_STOP, Config.getInstance().isIncludeDeepStop());
-                final String value = personal.getText();
-                final Integer verbruik = Integer.valueOf(value);
-                Config.getInstance().setPersonalAir(verbruik);
-                Storage.getInstance().writeObject(Config.PERSONAL_AIR, verbruik);
                 Config.getInstance().setCalculateNullDives(calculateNullDive.isSelected());
                 Storage.getInstance().writeObject(Config.CALCULATE_NULL_DIVE, Config.getInstance().isCalculateNullDives());
                 DecoTable.getInstance().calculate(DecoTable.getInstance().getHf());
@@ -96,7 +84,6 @@ class ConfigForm extends Form {
     public void updateConfig() {
         final Config config = Config.getInstance();
         deepStop.setSelected(config.isIncludeDeepStop());
-        personal.setText("" + config.getPersonalAir());
         calculateNullDive.setSelected(config.isCalculateNullDives());
     }
     

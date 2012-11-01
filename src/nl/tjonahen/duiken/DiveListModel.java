@@ -30,11 +30,11 @@ public class DiveListModel implements ListModel {
     private int selected = 0;
 
     public Object getItemAt(int index) {
-        return DecoTable.getInstance().getDives()[index];
+        return DecoTable.getInstance().getDives().get(index);
     }
 
     public int getSize() {
-        return DecoTable.getInstance().getDives().length;
+        return DecoTable.getInstance().getDives().size();
     }
 
     public int getSelectedIndex() {

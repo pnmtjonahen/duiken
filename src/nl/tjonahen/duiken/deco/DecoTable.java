@@ -17,6 +17,9 @@
 package nl.tjonahen.duiken.deco;
 
 import com.codename1.util.MathUtil;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The static dciem based NOB deco table.
@@ -37,9 +40,9 @@ public class DecoTable {
         return _instance;
     }
     
-    private Dive[] dives;
+    private List dives;
 
-    public Dive[] getDives() {
+    public List getDives() {
         return dives;
     }
 
@@ -49,7 +52,7 @@ public class DecoTable {
     
     public void calculate(final double hf) {
         this.hf = hf;
-        dives = new Dive[table.length];
+        dives = new ArrayList();
         for (int i = 0; i < table.length; i++) {
             final int mdd = table[i][0];
             final int dt;
@@ -74,15 +77,16 @@ public class DecoTable {
                                 deco6,
                                 deco3);
 
-                    dives[i] = new Dive();
-                    dives[i].setMaxmimumDiveDepthdd(mdd);
-                    dives[i].setDiveTime(dt);
-                    dives[i].setDeco12(deco12);
-                    dives[i].setDeco9(deco9);
-                    dives[i].setDeco6(deco6);
-                    dives[i].setDeco3(deco3);
-                    dives[i].setResultSurfaceAirMinutes(total);
-                    dives[i].setHg(getHg().charAt(i));
+                    final Dive dive = new Dive();
+                    dive.setMaxmimumDiveDepthdd(mdd);
+                    dive.setDiveTime(dt);
+                    dive.setDeco12(deco12);
+                    dive.setDeco9(deco9);
+                    dive.setDeco6(deco6);
+                    dive.setDeco3(deco3);
+                    dive.setResultSurfaceAirMinutes(total);
+                    dive.setHg(getHg().charAt(i));
+                    dives.add(dive);
                 }
             } else {
                 dt = (int) Math.floor(table[i][1]/hf);
@@ -97,15 +101,16 @@ public class DecoTable {
                             deco6,
                             deco3);
 
-                dives[i] = new Dive();
-                dives[i].setMaxmimumDiveDepthdd(mdd);
-                dives[i].setDiveTime(dt);
-                dives[i].setDeco12(deco12);
-                dives[i].setDeco9(deco9);
-                dives[i].setDeco6(deco6);
-                dives[i].setDeco3(deco3);
-                dives[i].setResultSurfaceAirMinutes(total);
-                dives[i].setHg(getHg().charAt(i));
+                final Dive dive = new Dive();
+                dive.setMaxmimumDiveDepthdd(mdd);
+                dive.setDiveTime(dt);
+                dive.setDeco12(deco12);
+                dive.setDeco9(deco9);
+                dive.setDeco6(deco6);
+                dive.setDeco3(deco3);
+                dive.setResultSurfaceAirMinutes(total);
+                dive.setHg(getHg().charAt(i));
+                dives.add(dive);
             }            
         }
     }
